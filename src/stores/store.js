@@ -11,3 +11,15 @@ export const useUserStore = defineStore('user', () => {
 
   return { user, setUser }
 })
+
+
+export const useInitDataStore = defineStore('initData', () => {
+  const initData = ref(null)
+
+  function setInitData(initData)
+  {
+    initData.value = initData
+  }
+
+  return { initData, setInitData }
+})
