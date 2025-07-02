@@ -4,7 +4,7 @@
 
   const filters = ref({
     name: '',
-    sortBy: ''
+    sortBy: 'count_spins'
   })
 
   const users = ref()
@@ -12,13 +12,12 @@
   async function getUsers()
   {
     try{
-      const res = await api.get('/users')
+      const res = await api.get('/users', { params: filters.value })
       users.value = res.data.data.users
     }catch(error){
       console.log(error)
     }
   }
-
 
   await getUsers();
 </script>
@@ -29,6 +28,7 @@
       v-model="filters.name"
       class="search-box"
       placeholder="Поиск по имени..."
+      @change="getUsers"
     >
 
     <div class="sort-buttons">
@@ -44,12 +44,12 @@
         :class="{ active: filters.sortBy === 'auras' }"
         @click="filters.sortBy = 'auras'"
       >
-        По количеству аур
+        По количеству мемов
       </button>
       <button
         class="sort-btn"
-        :class="{ active: filters.sortBy === 'spins' }"
-        @click="filters.sortBy = 'spins'"
+        :class="{ active: filters.sortBy === 'count_spins' }"
+        @click="filters.sortBy = 'count_spins'"
       >
         По вращениям
       </button>
