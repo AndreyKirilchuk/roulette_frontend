@@ -52,14 +52,14 @@ onMounted(async () => {
 
       <div class="bottom-nav" v-if="!error && showNav">
         <router-link to="/profile" class="nav-item" :class="{ active: route.path === '/profile' }">
-          <div class="nav-icon">👤</div>
+          <div class="nav-icon">😎</div>
           <div class="nav-label">Профиль</div>
         </router-link>
         <router-link to="/" class="nav-item" :class="{ active: route.path === '/' }">
           <div class="nav-icon">🎯</div>
           <div class="nav-label">Рулетка</div>
         </router-link>
-        <router-link to="/users" class="nav-item" :class="{ active: route.path === 'players' }">
+        <router-link to="/users" class="nav-item" :class="{ active: route.path === '/users' }">
           <div class="nav-icon">🏆</div>
           <div class="nav-label">Игроки</div>
         </router-link>

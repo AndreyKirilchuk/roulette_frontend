@@ -34,15 +34,8 @@
     <div class="sort-buttons">
       <button
         class="sort-btn"
-        :class="{ active: filters.sortBy === 'score' }"
-        @click="filters.sortBy = 'score'"
-      >
-        По рейтингу
-      </button>
-      <button
-        class="sort-btn"
-        :class="{ active: filters.sortBy === 'auras' }"
-        @click="filters.sortBy = 'auras'"
+        :class="{ active: filters.sortBy === 'count_memes' }"
+        @click="filters.sortBy = 'count_memes'"
       >
         По количеству мемов
       </button>
