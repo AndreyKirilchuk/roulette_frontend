@@ -15,7 +15,7 @@
     }
   }
 
-  await getCheck()
+  getCheck()
 </script>
 
 <template>

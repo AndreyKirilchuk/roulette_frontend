@@ -1,35 +1,34 @@
 <script setup>
 import { RouterView, useRoute, useRouter } from 'vue-router'
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useUserStore } from '@/stores/store.js'
 import api from '@/plugins/axios.js'
 
-const router = useRouter()
 const route = useRoute()
 const error = ref(false)
 const error_message = ref()
+const showNav = ref(computed(() => route.path !== '/register'))
+const router = useRouter()
 
 const userStore = useUserStore()
 
 onMounted(async () => {
+
   const tg = window.Telegram?.WebApp
 
-  if(!tg)
-  {
+  if (!tg || !tg.initData) {
     error.value = true
-    error_message.value = 'Приложение доступно только в Telegram'
+    error_message.value = 'Приложение доступно только внутри Telegram'
     return
   }
 
-
-  if (tg.platform !== 'android' || tg.platform !== 'ios') {
+  if (tg.platform !== 'android' && tg.platform !== 'ios') {
     error.value = true
     error_message.value = 'Доступно только в мобильном приложении Telegram (Android/iOS)'
     return
   }
 
-  const initData =
-    'query_id=AAGCcT8KAwAAAIJxPwpGvvOh&user=%7B%22id%22%3A6614380930%2C%22first_name%22%3A%22%D0%9C%D0%BE%D0%B4%D0%B5%D1%80%D0%B0%D1%82%D0%BE%D1%80%20%D0%9D%D0%B0%D0%B9%D0%B4%D0%B8%20%D0%BC%D0%B5%D0%BD%D1%8F%20%28%20%D0%9C%D0%A6%D0%9A%20-%20%D0%9A%D0%A2%D0%98%D0%A2%D0%A1%20%29%22%2C%22last_name%22%3A%22%22%2C%22username%22%3A%22ModerFindMe%22%2C%22language_code%22%3A%22ru%22%2C%22allows_write_to_pm%22%3Atrue%2C%22photo_url%22%3A%22https%3A%5C%2F%5C%2Ft.me%5C%2Fi%5C%2Fuserpic%5C%2F320%5C%2Fvxcx6OSc5u9EiBKHp9LpKBST4b-__WJw01Ws46q4360eJn-7NwH4FH09azz5pmye.svg%22%7D&auth_date=1751398199&signature=dTVuzK-qNozewZqoFzuMO8rLlQUHvT8sFTONWggVoC6kGlgiIcZRZvKwxavXQ3FS9RxJpIk6gJlWdy3Ly0dDBA&hash=759e0ceb4f31b5a7b272cc830deda9b5fd2d7ed8ae985758fc37a3c96354f836'
+  const initData = tg.initData;
 
   if (initData) {
     try {
@@ -51,7 +50,7 @@ onMounted(async () => {
     <div>
       <RouterView v-if="!error" />
 
-      <div class="bottom-nav" v-if="!error">
+      <div class="bottom-nav" v-if="!error && showNav">
         <router-link to="/profile" class="nav-item" :class="{ active: route.path === '/profile' }">
           <div class="nav-icon">👤</div>
           <div class="nav-label">Профиль</div>
